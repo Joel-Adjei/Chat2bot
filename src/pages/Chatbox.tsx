@@ -45,8 +45,8 @@ const Chatbox = () => {
   };
   return (
     <div className="">
-      <div className="h-screen w-full relatives flex flex-col bg-white">
-        <div className="w-full top-0 bg-blue-50 shadow border-b border-blue-600 py-2 flex justify-between items-center gap-2 px-4">
+      <div className="h-[100dvh] w-full relatives flex flex-col bg-white">
+        <div className="w-full top-0 bg-blue-50 border-b border-cyan-600 py-2 flex justify-between items-center gap-2 px-4">
           <NavLink to={"/"}>
             <div className="flex items-center">
               <BotIcon />
@@ -83,7 +83,7 @@ const Chatbox = () => {
         )}
 
         {isPending && (
-          <div className="absolute top-16 left-1/2 -translate-x-1/2 bg-gray-200 text-gray-900 px-3 py-2 rounded-xl">
+          <div className="text-left bg-gray-200 text-gray-900 px-3 py-2 rounded-xl">
             Bot is typing...
           </div>
         )}

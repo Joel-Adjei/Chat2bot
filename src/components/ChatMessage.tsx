@@ -6,14 +6,14 @@ interface ChatMessageProps {
 const ChatMessage = ({ text, type }: ChatMessageProps) => {
   const styling = () => {
     if (type === "assistant") {
-      return " rounded-bl-none bg-gray-200 text-gray-900 w-fit text-left";
+      return " rounded-bl-none bg-gray-200 text-cyan-900 w-fit text-left";
     } else {
-      return " rounded-br-none bg-amber-900 text-white text-right w-fit ml-auto";
+      return " rounded-br-none bg-cyan-900 text-white text-left w-fit ml-auto";
     }
   };
 
   return (
-    <div className={`px-3 py-2 rounded-xl w-fit ${styling()}`}>
+    <div className={`px-3 py-2 rounded-xl w-fit max-w-[80%] ${styling()}`}>
       <div dangerouslySetInnerHTML={{ __html: text }} />
     </div>
   );
