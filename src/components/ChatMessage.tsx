@@ -18,9 +18,9 @@ const ChatMessage = ({ text, type }: ChatMessageProps) => {
     </div>
   );
 
-  return (
-    <div className={`px-3 py-2 rounded-xl w-fit ${styling()}`}>{text}</div>
-  );
+  // return (
+  //   <div className={`px-3 py-2 rounded-xl w-fit ${styling()}`}>{text}</div>
+  // );
 };
 
 export default ChatMessage;
