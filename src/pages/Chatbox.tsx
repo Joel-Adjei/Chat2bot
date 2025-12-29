@@ -1,0 +1,115 @@
+import UserChat from "@/components/ChatMessage";
+import useMessageStore from "@/store/messageStore";
+import { BotIcon, PlusCircle, Send } from "lucide-react";
+import { useState } from "react";
+import useAxios from "@/lib/axios";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import { Button } from "@/components/ui/button";
+import { NavLink } from "react-router-dom";
+
+const Chatbox = () => {
+  const [input, setInput] = useState<string>("");
+  const { messages, addMessage, clearMessages } = useMessageStore();
+  const axios = useAxios();
+
+  const { mutateAsync, isPending } = useMutation({
+    mutationFn: async () => {
+      try {
+        const response = await axios.post("", {
+          model: import.meta.env.VITE_OPENAPI_MODEL,
+          messages: messages,
+          //   reasoning: { enabled: true },
+        });
+        const botMessage = response.data.choices[0].message;
+        addMessage({ role: "assistant", content: botMessage.content });
+        return botMessage;
+      } catch (error) {
+        toast.error("Failed to fetch response from the server.");
+        throw new Error("Failed to fetch response from the server.");
+      }
+    },
+  });
+
+  const handleSend = async () => {
+    if (input.trim() === "") {
+      toast.info("Please enter a message before sending.");
+      return;
+    }
+    setInput("");
+
+    // Add user message
+    addMessage({ role: "user", content: input });
+    await mutateAsync();
+  };
+  return (
+    <div className="">
+      <div className="h-screen w-full relatives">
+        <div className="fixed w-full top-0 bg-blue-50 shadow border-b border-blue-600 py-2 flex justify-between items-center gap-2 px-4">
+          <NavLink to={"/"}>
+            <div className="flex items-center">
+              <BotIcon />
+              <h3 className="text-lg font-semibold">Chat2bot</h3>
+            </div>
+          </NavLink>
+
+          <div>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => clearMessages()}
+              className="ml-auto"
+            >
+              New Chat
+              <PlusCircle className="ml-2" size={16} />
+            </Button>
+          </div>
+        </div>
+
+        <div className="h-full p-5 space-y-3 overflow-y-auto pb-35 pt-17">
+          {/* <UserChat text="Hello! How can I assist you today?" type="user" /> */}
+          {messages.map((msg, index) => (
+            <UserChat key={index} text={msg.content} type={msg.role} />
+          ))}
+        </div>
+
+        {messages.length === 0 && !isPending && (
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-gray-500">
+            <p className="text-4xl mb-4">Start a new conversation!</p>
+            <BotIcon className="mx-auto mb-2" size={48} />
+            <p>Ask me anything about your data.</p>
+          </div>
+        )}
+
+        {isPending && (
+          <div className="absolute top-16 left-1/2 -translate-x-1/2 bg-gray-200 text-gray-900 px-3 py-2 rounded-xl">
+            Bot is typing...
+          </div>
+        )}
+
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-2 w-[90%] ">
+          <textarea
+            value={input}
+            onChange={(e) => {
+              setInput(e.target.value);
+            }}
+            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+            className="w-full min-h-30 max-h-60 border-2 bg-gray-50 border-gray-300 px-3 py-2 rounded-2xl"
+            placeholder="Type your message..."
+            rows={4}
+            draggable={false}
+          />
+
+          <Button
+            onClick={handleSend}
+            className="fixed z-20 size-10 right-4 bottom-4 text-white flex items-center justify-center rounded-full"
+          >
+            <Send size={16} />
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Chatbox;
