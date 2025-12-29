@@ -41,11 +41,12 @@ const Chatbox = () => {
     // Add user message
     addMessage({ role: "user", content: input });
     await mutateAsync();
+    setInput("");
   };
   return (
     <div className="">
-      <div className="h-screen w-full relatives">
-        <div className="fixed w-full top-0 bg-blue-50 shadow border-b border-blue-600 py-2 flex justify-between items-center gap-2 px-4">
+      <div className="h-screen w-full relatives flex flex-col bg-white">
+        <div className="w-full top-0 bg-blue-50 shadow border-b border-blue-600 py-2 flex justify-between items-center gap-2 px-4">
           <NavLink to={"/"}>
             <div className="flex items-center">
               <BotIcon />
@@ -66,7 +67,7 @@ const Chatbox = () => {
           </div>
         </div>
 
-        <div className="h-full p-5 space-y-3 overflow-y-auto pb-35 pt-17">
+        <div className="flex-1 p-5 space-y-3 overflow-y-auto pb-35">
           {/* <UserChat text="Hello! How can I assist you today?" type="user" /> */}
           {messages.map((msg, index) => (
             <UserChat key={index} text={msg.content} type={msg.role} />
@@ -97,11 +98,12 @@ const Chatbox = () => {
             className="w-full min-h-30 max-h-60 border-2 bg-gray-50 border-gray-300 px-3 py-2 rounded-2xl"
             placeholder="Type your message..."
             rows={4}
-            draggable={false}
+            disabled={isPending}
           />
 
           <Button
             onClick={handleSend}
+            disabled={isPending}
             className="fixed z-20 size-10 right-4 bottom-4 text-white flex items-center justify-center rounded-full"
           >
             <Send size={16} />

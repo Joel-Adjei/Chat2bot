@@ -12,13 +12,11 @@ const ChatMessage = ({ text, type }: ChatMessageProps) => {
     }
   };
 
-  if (type === "assistant") {
-    return (
-      <div className={`px-3 py-2 rounded-xl w-fit ${styling()}`}>
-        <div dangerouslySetInnerHTML={{ __html: text }} />
-      </div>
-    );
-  }
+  return (
+    <div className={`px-3 py-2 rounded-xl w-fit ${styling()}`}>
+      <div dangerouslySetInnerHTML={{ __html: text }} />
+    </div>
+  );
 
   return (
     <div className={`px-3 py-2 rounded-xl w-fit ${styling()}`}>{text}</div>
