@@ -12,10 +12,10 @@ const Home = () => {
         className="absolute w-full h-full object-cover -z-10"
       />
       <div className="h-screen w-full bg-blue-950/30 text-center flex flex-col justify-center items-center">
-        <h2 className="text-8xl bg-linear-to-l from-blue-800 to-cyan-200 bg-clip-text text-transparent font-extrabold mb-4 ">
+        <h2 className="text-4xl md:text-8xl bg-linear-to-l from-blue-800 to-cyan-200 bg-clip-text text-transparent font-extrabold mb-4 ">
           Welcome to Chat2bot
         </h2>
-        <p className="mb-8 text-white">Your AI-powered chatbot application.</p>
+        <p className="mb-8 text-white ">Your AI-powered chatbot application.</p>
 
         <div>
           <Button
