@@ -5,14 +5,19 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
   return (
-    <div>
+    <div className="bg-linear-to-br from-blue-800 to-cyan-950 opacity-90">
       <img
         src={images.bg1}
         alt="Background"
-        className="absolute w-full h-full object-cover -z-10"
+        className="absolute w-full h-full object-cover -z-10 "
       />
-      <div className="h-screen w-full bg-blue-950/30 text-center flex flex-col justify-center items-center">
-        <h2 className="text-4xl md:text-8xl bg-linear-to-l from-sky-300 to-cyan-800 bg-clip-text text-transparent font-extrabold mb-4 ">
+      <div className="h-screen w-full bg-linear-to-bl from-sky-950/90 to-cyan-500/40 text-center flex flex-col justify-center items-center">
+        <img
+          src={images.botImg}
+          alt="Chat2bot Logo"
+          className="size-35 border-5 border-cyan-100 shadow-2xl rounded-full mb-4"
+        />
+        <h2 className="text-4xl md:text-7xl bg-linear-to-l from-sky-100 to-sky-300 bg-clip-text text-transparent font-extrabold mb-4 ">
           Welcome to Chat2bot
         </h2>
         <p className="mb-8 text-white ">Your AI-powered chatbot application.</p>

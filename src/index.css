@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap");
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -52,10 +54,10 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(35.679% 0.17798 263.751);
+  --primary: oklch(42.044% 0.15251 258.523);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(33.374% 0.08534 245.742);
+  --secondary-foreground: oklch(92.531% 0.05502 218.136);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
@@ -119,5 +121,6 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Lexend", sans-serif;
   }
 }
