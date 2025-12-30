@@ -1,7 +1,13 @@
 import UserChat from "@/components/ChatMessage";
 import useMessageStore from "@/store/messageStore";
-import { BotIcon, LoaderCircle, PlusCircle, Send } from "lucide-react";
-import { useEffect, useState } from "react";
+import {
+  ArrowDown,
+  BotIcon,
+  LoaderCircle,
+  PlusCircle,
+  Send,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import useAxios from "@/lib/axios";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
@@ -12,6 +18,7 @@ import { images } from "@/assets/assets";
 const Chatbox = () => {
   const [input, setInput] = useState<string>("");
   const { messages, addMessage, clearMessages } = useMessageStore();
+  const messageContainerRef = useRef<HTMLDivElement>(null);
   const axios = useAxios();
 
   const { mutateAsync, isPending } = useMutation({
@@ -45,8 +52,40 @@ const Chatbox = () => {
     setInput("");
   };
 
+  // useEffect(() => {
+  //   if (messageContainerRef.current) {
+  //     const lastChild =
+  //       messageContainerRef.current.querySelector(":last-child");
+  //     if (lastChild) {
+  //       lastChild.scrollIntoView({ behavior: "smooth" });
+  //     }
+  //   }
+  // }, [messages]);
+
+  const stopFetching = () => {};
+
+  const scrollToBottom = () => {
+    const container = messageContainerRef.current;
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  };
+
+  const isAtBottom = messageContainerRef.current
+    ? messageContainerRef.current.scrollHeight -
+        messageContainerRef.current.scrollTop ===
+      messageContainerRef.current.clientHeight
+    : true;
+
   useEffect(() => {
-    window.scrollTo(0, 80);
+    const container = messageContainerRef.current;
+    if (container) {
+      // Directly scroll to the bottom using scrollHeight
+      container.scrollTop = container.scrollHeight;
+      container.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
   }, [messages]);
 
   return (
@@ -77,7 +116,10 @@ const Chatbox = () => {
           </div>
         </div>
 
-        <div className="flex-1 p-5 space-y-5 overflow-y-auto pb-35">
+        <div
+          className="relative flex-1 p-5 space-y-5 overflow-y-auto pb-38"
+          ref={messageContainerRef}
+        >
           {/* <UserChat text="Hello! How can I assist you today?" type="user" /> */}
           {messages.map((msg, index) => (
             <UserChat key={index} text={msg.content} type={msg.role} />
@@ -91,6 +133,15 @@ const Chatbox = () => {
               />
               Chat2 is typing...
             </div>
+          )}
+
+          {!isAtBottom && (
+            <Button
+              onClick={scrollToBottom}
+              className="fixed bottom-40 right-10 rounded-full size-10 flex items-center justify-center text-white"
+            >
+              <ArrowDown size={20} />
+            </Button>
           )}
         </div>
 
@@ -109,7 +160,7 @@ const Chatbox = () => {
               setInput(e.target.value);
             }}
             onKeyDown={(e) => e.key === "Enter" && handleSend()}
-            className="w-full min-h-30 max-h-60 border-2 bg-gray-50 border-gray-300 px-3 py-2 rounded-2xl"
+            className="w-full min-h-30 max-h-60 border-2 bg-gray-50 border-gray-300 disabled:cursor-not-allowed px-3 py-2 rounded-2xl"
             placeholder="Type your message..."
             rows={4}
             disabled={isPending}
@@ -118,7 +169,7 @@ const Chatbox = () => {
           <Button
             onClick={handleSend}
             disabled={isPending}
-            className="fixed z-20 size-10 right-4 bottom-4 text-white flex items-center justify-center rounded-full"
+            className="fixed z-20 size-10 right-4 bottom-4 text-white disabled:cursor-not-allowed flex items-center justify-center rounded-full"
           >
             <Send size={16} />
           </Button>
