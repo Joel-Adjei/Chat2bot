@@ -62,7 +62,7 @@ const Chatbox = () => {
   //   }
   // }, [messages]);
 
-  const stopFetching = () => {};
+  // const stopFetching = () => {};
 
   const scrollToBottom = () => {
     const container = messageContainerRef.current;
