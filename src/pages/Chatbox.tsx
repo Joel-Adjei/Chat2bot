@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { NavLink } from "react-router-dom";
 import { images } from "@/assets/assets";
+import CustomAlertDialog from "@/components/CustomAlertDialog";
 
 const Chatbox = () => {
   const [input, setInput] = useState<string>("");
@@ -91,28 +92,28 @@ const Chatbox = () => {
   return (
     <div className="">
       <div className="h-dvh w-full relatives flex flex-col bg-white">
-        <div className="w-full top-0 bg-blue-50 border-b border-cyan-600 py-2 flex justify-between items-center gap-2 px-4">
+        <div className="w-full top-0 bg-blue-50 border-b border-cyan-600 py-2 flex justify-between items-center gap-2 px-4 md:px-9">
           <NavLink to={"/"}>
             <div className="flex items-center">
-              <img
-                src={images.botImg}
-                alt="Logo"
-                className="h-8 rounded-full border border-cyan-600 ml-2 mr-2"
-              />
+              <img src={images.botImg} alt="Logo" className="h-8" />
               <h3 className="text-lg text-sky-800 font-semibold">Chat2bot</h3>
             </div>
           </NavLink>
 
           <div>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => clearMessages()}
-              className="ml-auto"
+            <CustomAlertDialog
+              actionText="Okay"
+              cancelText="Cancel"
+              description="Create new chat will clear recent chat"
+              title="Create new Chat"
+              onAction={() => clearMessages()}
+              onCancel={() => {}}
             >
-              New Chat
-              <PlusCircle className="ml-2" size={16} />
-            </Button>
+              <Button variant="secondary" size="sm" className="py-4">
+                New Chat
+                <PlusCircle className="ml-2" size={16} />
+              </Button>
+            </CustomAlertDialog>
           </div>
         </div>
 
@@ -149,7 +150,7 @@ const Chatbox = () => {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-gray-500">
             <p className="text-4xl mb-4">Start a new conversation!</p>
             <BotIcon className="mx-auto mb-2" size={48} />
-            <p>Ask me anything about your data.</p>
+            <p>Ask me anything.</p>
           </div>
         )}
 
@@ -159,7 +160,6 @@ const Chatbox = () => {
             onChange={(e) => {
               setInput(e.target.value);
             }}
-            onKeyDown={(e) => e.key === "Enter" && handleSend()}
             className="w-full min-h-30 max-h-60 border-2 bg-gray-50 border-gray-300 disabled:cursor-not-allowed px-3 py-2 rounded-2xl"
             placeholder="Type your message..."
             rows={4}
