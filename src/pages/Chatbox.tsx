@@ -102,9 +102,9 @@ const Chatbox = () => {
 
           <div>
             <CustomAlertDialog
-              actionText="Okay"
+              actionText="Continue"
               cancelText="Cancel"
-              description="Create new chat will clear recent chat"
+              description="Creating a new chat will clear current chat"
               title="Create new Chat"
               onAction={() => clearMessages()}
               onCancel={() => {}}
